@@ -8,15 +8,11 @@
     <body>
         <div class="main-content">
             {{>header}}
-            <p>Use this site to get your weather</p>
-            <form>
-                <input placeholder="location">
-                <button>Search</button>
-            </form>
-            <p id="message-1"></p>
-            <p id="message-2"></p>
+            <button id="increment">increment</button>
+            
         </div>
         {{>footer}}
-        <script src="js/app.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/chat.js"></script>
     </body>
 </html>

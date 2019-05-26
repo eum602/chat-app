@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.0",
-    "hbs": "^4.0.4"
+    "hbs": "^4.0.4",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "env-cmd": "^8.0.2",
