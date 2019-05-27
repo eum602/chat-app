@@ -2,13 +2,46 @@
 <html>
     <head>
        <link rel="stylesheet" href="css/style.css">
-       <link rel="icon" href="/img/weather.png">       
+       <link rel="icon" href="/img/logo-chat.png">
+       <link rel="stylesheet" type="text/css" href="vendors/css/Grid.css">
        <title>Chat App</title>
     </head>
     <body>
         <div class="main-content">
             {{>header}}
-            <button id="increment">increment</button>
+
+            <section class="section-form">                
+               
+                <div class="row">
+                    <form method="post" action="#" class="contact-form" id="message-form">
+                        <div class="row">
+                            <div class="col span-1-of-3">
+                                <label for="name">Message</label>
+                            </div>
+                            <div class="col span-2-of-3">
+                                <input type="text" name="message" id="name" placeholder="Your message" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col span-1-of-3">
+                                <label>&nbsp;</label>
+                            </div>
+                            <div class="col span-2-of-3">
+                                <input type="submit" name="submit" value="Send it!">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="row">
+                    <input type="submit" id="send-location" value="send Location"/>                    
+                </div>  
+                      
+            </section>
+
+
             
         </div>
         {{>footer}}

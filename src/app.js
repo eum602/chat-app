@@ -3,6 +3,7 @@ const hbs = require('hbs')
 const path = require('path') //core module
 const http = require('http') //core module
 const socketio = require('socket.io')
+const Filter = require('bad-words')
 //routers
 const socketRouter = require('./routers/socketRouter')
 
@@ -32,16 +33,34 @@ app.use(express.static(publicDirectoryPath)) //to customize our server
 app.use(express.json()) //parsing automatic incoming json to an object, so we can easily process objects
 
 app.use(socketRouter)
-let count = 0
-io.on('connection',socket=>{
-    //console.log('new websocket connection')
-    socket.emit('countUpdated',count) //emmiting a new cusstom event to all users
 
-    socket.on('increment',()=>{
-        count++
-        //socket.emit('countUpdated',count)//emits to a particular connection
-        io.emit('countUpdated',count) //emitting to everyone
+io.on('connection',socket=>{
+    console.log('new websocket connection')    
+    socket.emit('message','Welcome!')
+
+    socket.on('sendMessage',(message,callback) => {
+        const filter = new Filter()
+        if(filter.isProfane(message)){
+            return callback('Profanity is not allowed')
+        }
+        socket.broadcast.emit('message',message)
+        callback()
     })
+
+    socket.on('sendLocation',({latitude,longitude},callback)=>{
+        try{
+            socket.broadcast.emit('message',`https://google.com/maps?q=${latitude},${longitude}`)
+            callback()
+        }catch(e){
+            callback(e)
+        }
+    })
+
+    //events for disconnected sockets
+    socket.on('disconnect', ()=>{
+        io.emit('message', "A user has disconnected")
+    })
+    
 })
 
 

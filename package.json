@@ -11,6 +11,7 @@
   "author": "Erick Pacheco P.",
   "license": "ISC",
   "dependencies": {
+    "bad-words": "^3.0.0",
     "express": "^4.17.0",
     "hbs": "^4.0.4",
     "socket.io": "^2.2.0"

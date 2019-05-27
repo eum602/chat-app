@@ -50,10 +50,104 @@ input {
     padding: 8px    
 }
 
-button {
-    cursor: pointer;
-    border: 1px solid #888;
-    background: #888;
-    color: white;
-    padding: 8px;
+/*-------------BUTTONS--------------- */
+.btn:link, /*link and visited will have the same behaviour*/
+.btn:visited,
+input[type=submit] {/*pseudo classes:link, visited, active and hover*/
+    display: inline-block;
+    padding: 10px 30px;/*top bottom left right*/
+    font-weight: 300; /*scaling the weight*/
+    text-decoration: none;
+    border-radius: 200px;
+    -webkit-transition: background-color 0.2s,border 0.2s, color 0.2s;
+    transition: background-color 0.2s,border 0.2s, color 0.2s;    
+}
+
+input[type=submit]{
+    background-color: #fff
+}
+
+.btn-full:link,
+.btn-full:visited{
+    background-color: #e67e22;
+    border: 1px solid #e67e22;
+    color: #fff;
+    margin-right: 15px
+}
+
+.btn-ghost:link,
+.btn-ghost:visited,
+input[type=submit]{
+    border: 1px solid #e67e22;
+    color: #e67e22
+}
+
+.btn:hover,
+.btn:active,
+input[type=submit]:hover{
+    background-color: #cf6d17;
+    cursor: pointer;/*I added this because was could not make appear hand in send it button*/
+}
+
+.btn-full:hover,
+.btn-full:active{
+    border: 1px solid #cf6d17
+}
+
+.btn-ghost:hover,
+.btn-ghost:active,
+input[type=submit]:hover{
+    border: 1px solid #cf6d17;
+    color: #fff
+}
+
+.btn-disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+/*-------------------------------------------------------*/
+/*REUSABLE COMPONENTS*/
+/*-------------------------------------------------------*/
+
+.row {
+    max-width: 1140px;/*absolute value in pixels*/
+    /*margin: 0 auto 0 auto/*top right bottom left*/
+    margin: 0 auto/*top and bottom will be zero and left and rigth will be auto*/
+     
+}
+
+section {
+    padding: 80px 0
+}
+
+/*-------------------------------------------------------*/
+/*FORM*/
+/*-------------------------------------------------------*/
+
+.section-form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+input[type=text],
+input[type=email],
+select,
+textarea {
+    width: 100%;
+    padding: 7px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+textarea {
+    height: 100px;
+}
+
+input[type=checkbox] {
+    margin: 10px 1px 10px 0;/*top right bottom left*/
+}
+
+*:focus {
+    outline: none; /*to avoid the fous when picking an input, or textarea*/
 }
