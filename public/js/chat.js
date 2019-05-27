@@ -6,9 +6,25 @@ const $messageForm = document.querySelector('#message-form')
 const $messageFormInput= $messageForm.elements.message
 const $messageFormButton = $messageForm.elements.submit
 const $sendLocationButton = document.querySelector("#send-location")
+const $messages = document.querySelector("#messages")
+
+//Templates
+const messageTemplate = document.querySelector('#message-template').innerHTML
+//innerHTML gives us access to the html inside the element
 
 socket.on('message', message=>{
     console.log(`Server says: ${message}` )
+    
+    const element = document.createElement('div')
+    const msg = document.createTextNode(message)
+    element.appendChild(msg)    
+    html = element.outerHTML    
+    
+    $messages.insertAdjacentHTML('beforeend',html)//allows insert elements to the selected elements
+    //afterbegin:just at the top inside of the div; means newer messages will show us first
+    //afterend: means after the element clases
+    //before begin: before the messages div
+    //beforeend:before the mesage div ends, inside of it.
 })
 
 

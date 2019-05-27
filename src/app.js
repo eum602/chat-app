@@ -43,7 +43,7 @@ io.on('connection',socket=>{
         if(filter.isProfane(message)){
             return callback('Profanity is not allowed')
         }
-        socket.broadcast.emit('message',message)
+        io.emit('message',message)
         callback()
     })
 
