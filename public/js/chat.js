@@ -11,9 +11,10 @@ const $messages = document.querySelector("#messages")
 //Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 //innerHTML gives us access to the html inside the element
-const renderMsg = message=>{
+const renderMsg = ({text,createdAt})=>{
     const element = document.createElement('div')
-    const msg = document.createTextNode(message)
+    const formated_time = moment(createdAt).format('h:mm a')
+    const msg = document.createTextNode(`${formated_time} - ${text}`)
     element.appendChild(msg)    
     const html = element.outerHTML //parsing from html to string   
     
@@ -24,12 +25,14 @@ const renderMsg = message=>{
     //beforeend:before the mesage div ends, inside of it.
 }
 
-const renderUrl = url=>{
+const renderUrl = ({url,createdAt})=>{
     const container = document.createElement('div')
     container.className='row'
 
     const paragraph = document.createElement('p')
-
+    const formated_time = moment(createdAt).format('h:mm a')
+    paragraph.textContent = `${formated_time} -  `
+    
     const anchor = document.createElement('A')
     //const ref = document.createAttribute('href')
     //ref.value = url
@@ -49,9 +52,9 @@ const renderUrl = url=>{
 }
 
 
-socket.on('message', message=>{
-    console.log(`Server says: ${message}`)
-    renderMsg(message)
+socket.on('message', ({text,createdAt})=>{
+    console.log(`Server says: ${createdAt} ${text}`)
+    renderMsg({text,createdAt})
 })
 
 socket.on('locationMessage', url=>{    

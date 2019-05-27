@@ -4,6 +4,7 @@ const path = require('path') //core module
 const http = require('http') //core module
 const socketio = require('socket.io')
 const Filter = require('bad-words')
+const {generateMessage,generateLocationMessage} = require('./utils/messages')
 //routers
 const socketRouter = require('./routers/socketRouter')
 
@@ -36,20 +37,21 @@ app.use(socketRouter)
 
 io.on('connection',socket=>{
     console.log('new websocket connection')    
-    socket.emit('message','Welcome!')
+    socket.emit('message',generateMessage('Welcome!'))
+    socket.broadcast.emit('message',generateMessage('a user has joined'))
 
     socket.on('sendMessage',(message,callback) => {
         const filter = new Filter()
         if(filter.isProfane(message)){
             return callback('Profanity is not allowed')
         }
-        io.emit('message',message)
+        io.emit('message',generateMessage(message))
         callback()
     })
 
     socket.on('sendLocation',({latitude,longitude},callback)=>{
         try{
-            io.emit('locationMessage',`https://google.com/maps?q=${latitude},${longitude}`)
+            io.emit('locationMessage',generateLocationMessage(`https://google.com/maps?q=${latitude},${longitude}`))
             callback()
         }catch(e){
             callback(e)
@@ -58,9 +60,8 @@ io.on('connection',socket=>{
 
     //events for disconnected sockets
     socket.on('disconnect', ()=>{
-        io.emit('message', "A user has disconnected")
-    })
-    
+        io.emit('message', generateMessage('A user has disconnected'))
+    })    
 })
 
 
