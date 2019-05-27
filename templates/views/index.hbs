@@ -6,42 +6,52 @@
        <link rel="stylesheet" type="text/css" href="vendors/css/Grid.css">
        <title>Chat App</title>
     </head>
-    <body>
-        
-        {{>header}}
+    <body> 
 
-        <div id="messages"></div>
-        
-        <section class="section-form">                
-            
-            <div class="row">
-                <form method="post" action="#" class="contact-form" id="message-form">
-                    <div class="row">
-                        <div class="col span-1-of-3">
-                            <label for="name">Message</label>
-                        </div>
-                        <div class="col span-2-of-3">
-                            <input type="text" name="message" id="name" placeholder="Your message" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col span-1-of-3">
-                            <label>&nbsp;</label>
-                        </div>
-                        <div class="col span-2-of-3">
-                            <input type="submit" name="submit" value="Send it!">
-                        </div>
-                    </div>
-
-                </form>
+               
+            <div class="leftside"> 
+                    <p>Hello leftbar</p>                
             </div>
+            
+            <div class="chat">
 
-            <div class="row">
-                <input type="submit" id="send-location" value="send Location"/>                    
-            </div>  
+                <div id="messages"></div>
+                
+                <section class="section-form">                
                     
-        </section>
+                    <div class="row">
+                        <form method="post" action="#" class="contact-form" id="message-form">
+                            <div class="row">
+                                <div class="col span-1-of-3">
+                                    <label for="name">Message</label>
+                                </div>
+                                <div class="col span-2-of-3">
+                                    <input type="text" name="message" id="name" placeholder="Your message" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col span-1-of-3">
+                                    <label>&nbsp;</label>
+                                </div>
+                                <div class="col span-2-of-3">
+                                    <input type="submit" name="submit" value="Send it!">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <input type="submit" id="send-location" value="send Location"/>                    
+                    </div>  
+                            
+                </section>
+                
+            </div>
+        
+        
+        
 
         <!--Creating a template to render content-->
         <script id="message-template" type="text/html">
@@ -49,7 +59,7 @@
                 <p> {{message}} </p>
             </div>
         </script>        
-        {{>footer}}
+       
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>

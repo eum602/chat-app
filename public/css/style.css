@@ -1,55 +1,33 @@
-body {
-    color:#333333;
-    font-family: Arial;
-    max-width: 650px;
-    margin: 0 auto; /*0 top and bottom; auto: in left and right*/
-    padding: 0 16px; /*0 between top and right and the body content  16px between the body cotent and the righ left*/
 
-    display: flex; /*setting flexbox*/
-    flex-direction: column; /*all from top to bottom*/
-    min-height: 100vh; /*viewport height of 100% which refers to the voew we see on the browser*/
-    
+/*Orange color: #e67e22*/
+/*-------------------------------------------------------*/
+/*BASIC SETUP*/
+/*-------------------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
 }
 
-.main-content {
-    flex-grow: 1; /*the content of this class takes all the left over space */
+html,body {
+    background-color: #fff;
+    color: #555;
+    font-family: 'Lato','Arial',sans-serif;/*If lato if not available*/
+    font-weight: 300;
+    font-size: 20px;
+    text-rendering: optimizeLegibility; /*rendering in a perfect way*/
+    overflow-x: hidden;
 }
 
-footer {
-    /*background: blue;
-    margin: 16px;
-    padding: 16px;*/
-    color:#888;
-    border-top:   1px solid #eee;
-    margin-top: 16px;
-    padding: 16px 0;
+.clearfix{zoom:1}
+.clearfix:after{/*clearing the FLOAT after an element*/
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
 }
-
-header {
-    margin-top: 16px;
-    margin-bottom: 48px; 
-}
-
-h1 {
-    font-size: 64px;
-    margin-bottom: 16px;
-}
-
-header a { /*targeting links that are into header*/
-    color: #888;
-    margin-right: 16px;
-    text-decoration: none; /*removing default decorations*/
-}
-
-.portrait { /*settin a class*/
-    width: 250px
-}
-
-input {
-    border: 1px solid #ccc;
-    padding: 8px    
-}
-
 /*-------------BUTTONS--------------- */
 .btn:link, /*link and visited will have the same behaviour*/
 .btn:visited,
@@ -113,8 +91,7 @@ input[type=submit]:hover{
 .row {
     max-width: 1140px;/*absolute value in pixels*/
     /*margin: 0 auto 0 auto/*top right bottom left*/
-    margin: 0 auto/*top and bottom will be zero and left and rigth will be auto*/
-     
+    margin: 0 auto;/*top and bottom will be zero and left and rigth will be auto*/  
 }
 
 section {
@@ -151,3 +128,26 @@ input[type=checkbox] {
 *:focus {
     outline: none; /*to avoid the fous when picking an input, or textarea*/
 }
+
+/*leftbar*/
+.leftside{
+    background-color: #e67e22;
+    display:block;
+    height: 100vh;
+    width: 20%;
+    float: left; /*very important in ordet to the next element also go on one edge with it*/
+    position: fixed
+}
+
+.chat{
+    width: 60%;    
+    margin: 10px 10px 0 25% /*up right bottom left*/
+}
+/*
+.box:last-child{
+    position: relative;
+    left: 0%;
+    padding-left: 3%;
+    margin-top: 70px;
+}
+*/

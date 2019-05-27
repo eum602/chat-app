@@ -31,7 +31,7 @@ const renderUrl = ({url,createdAt})=>{
 
     const paragraph = document.createElement('p')
     const formated_time = moment(createdAt).format('h:mm a')
-    paragraph.textContent = `${formated_time} -  `
+    paragraph.textContent = `${formated_time} -  ` //adding content
     
     const anchor = document.createElement('A')
     //const ref = document.createAttribute('href')
