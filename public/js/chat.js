@@ -11,20 +11,51 @@ const $messages = document.querySelector("#messages")
 //Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 //innerHTML gives us access to the html inside the element
-
-socket.on('message', message=>{
-    console.log(`Server says: ${message}` )
-    
+const renderMsg = message=>{
     const element = document.createElement('div')
     const msg = document.createTextNode(message)
     element.appendChild(msg)    
-    html = element.outerHTML    
+    const html = element.outerHTML //parsing from html to string   
     
     $messages.insertAdjacentHTML('beforeend',html)//allows insert elements to the selected elements
     //afterbegin:just at the top inside of the div; means newer messages will show us first
     //afterend: means after the element clases
     //before begin: before the messages div
     //beforeend:before the mesage div ends, inside of it.
+}
+
+const renderUrl = url=>{
+    const container = document.createElement('div')
+    container.className='row'
+
+    const paragraph = document.createElement('p')
+
+    const anchor = document.createElement('A')
+    //const ref = document.createAttribute('href')
+    //ref.value = url
+    //element.setAttributeNode(ref)
+    anchor.href=url
+    anchor.target = "_blank" //to click and automatically open new tab
+    anchor.textContent = 'My current location'
+    anchor.className = 'btn btn-ghost' //setting style
+
+    paragraph.appendChild(anchor)
+
+    container.appendChild(paragraph)
+    //console.log(anchor)
+
+    const html = container.outerHTML
+    $messages.insertAdjacentHTML('beforeend',html)
+}
+
+
+socket.on('message', message=>{
+    console.log(`Server says: ${message}`)
+    renderMsg(message)
+})
+
+socket.on('locationMessage', url=>{    
+    renderUrl(url)
 })
 
 
@@ -43,7 +74,6 @@ $messageForm.addEventListener('submit',e=>{
             return console.log(error)
         }
         console.log('The message was delivered')//a callback to ackonwledge a message was delivered
-        
     })
 })
 
