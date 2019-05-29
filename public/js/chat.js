@@ -1,5 +1,7 @@
 const socket = io() //calling the io funtion
 
+const app = {}
+
 //****Elements*****
 const $messageForm = document.querySelector('#message-form') 
 //dollar sign at the beggining is merely a convention
@@ -107,3 +109,24 @@ $sendLocationButton.addEventListener('click',()=>{
         })
     })
 })
+
+app.getData = (key)=>{
+    const value = localStorage.getItem(key)    
+    if(typeof(value) == 'string'){
+        try{
+            const parsedValue = JSON.parse(value)
+            if(typeof(parsedValue) == 'object'){
+                return parsedValue
+            } else {
+                //app.setLoggedInClass(false)
+                //something bad
+            }
+        }catch(e){
+        //app.config.sessionToken = false
+        //app.setLoggedInClass(false)
+        }
+    }
+}
+
+const userRoom = app.getData('userRoom') //getting object to create a new room
+socket.emit('join',userRoom)

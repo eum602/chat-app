@@ -36,16 +36,32 @@ app.use(express.json()) //parsing automatic incoming json to an object, so we ca
 app.use(socketRouter)
 
 io.on('connection',socket=>{
-    console.log('new websocket connection')    
-    socket.emit('message',generateMessage('Welcome!'))
-    socket.broadcast.emit('message',generateMessage('a user has joined'))
+    console.log('new websocket connection')
+
+    socket.on('join',({username,room})=>{
+        //joining a new user to a specific room        
+        socket.join(room)
+        //Lets recap
+        //socket.emit=> send message to a specific client
+        //io.emit => sends an event to all clients including the sender.
+        //socket.broadcast.emit => sends an event to every connected client except the sender
+        //io.to.emit => similar to io but in one room
+        //socket.broadcast.emit => analogous to soclket.broadcast but in one room
+
+        socket.emit('message',generateMessage('Welcome!')) //emitting event only to the new user
+
+        //telling other in the room that a new user has joined
+        socket.broadcast.to(room).emit('message',generateMessage(`${username} has joined!`))
+    })  
+    
 
     socket.on('sendMessage',(message,callback) => {
         const filter = new Filter()
         if(filter.isProfane(message)){
             return callback('Profanity is not allowed')
         }
-        io.emit('message',generateMessage(message))
+        //testing with 345
+        io.to('345').emit('message',generateMessage(message))
         callback()
     })
 
