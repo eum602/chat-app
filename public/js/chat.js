@@ -15,7 +15,8 @@ const renderMsg = ({text,createdAt})=>{
     const element = document.createElement('div')
     const formated_time = moment(createdAt).format('h:mm a')
     const msg = document.createTextNode(`${formated_time} - ${text}`)
-    element.appendChild(msg)    
+    element.appendChild(msg)
+    element.className = ''
     const html = element.outerHTML //parsing from html to string   
     
     $messages.insertAdjacentHTML('beforeend',html)//allows insert elements to the selected elements
@@ -40,7 +41,7 @@ const renderUrl = ({url,createdAt})=>{
     anchor.href=url
     anchor.target = "_blank" //to click and automatically open new tab
     anchor.textContent = 'My current location'
-    anchor.className = 'btn btn-ghost' //setting style
+    anchor.className = 'btn btn-location' //setting style
 
     paragraph.appendChild(anchor)
 
@@ -48,17 +49,24 @@ const renderUrl = ({url,createdAt})=>{
     //console.log(anchor)
 
     const html = container.outerHTML
-    $messages.insertAdjacentHTML('beforeend',html)
+    $messages.insertAdjacentHTML('beforeend',html)    
+}
+
+const forceScrollDown = () => {
+    var objDiv = document.getElementById("messages");
+    objDiv.scrollTop = objDiv.scrollHeight;
 }
 
 
 socket.on('message', ({text,createdAt})=>{
     console.log(`Server says: ${createdAt} ${text}`)
     renderMsg({text,createdAt})
+    forceScrollDown()    
 })
 
 socket.on('locationMessage', url=>{    
     renderUrl(url)
+    forceScrollDown()
 })
 
 

@@ -29,17 +29,21 @@ html,body {
     visibility: hidden;
 }
 /*-------------BUTTONS--------------- */
+.btn-location{
+    padding: 0px 0px
+}
 .btn:link, /*link and visited will have the same behaviour*/
 .btn:visited,
 input[type=submit] {/*pseudo classes:link, visited, active and hover*/
     display: inline-block;
-    padding: 10px 30px;/*top bottom left right*/
+    padding: 6px 10px;/*top bottom left right*/
     font-weight: 300; /*scaling the weight*/
     text-decoration: none;
     border-radius: 200px;
     -webkit-transition: background-color 0.2s,border 0.2s, color 0.2s;
     transition: background-color 0.2s,border 0.2s, color 0.2s;    
 }
+
 
 input[type=submit]{
     background-color: #fff
@@ -62,7 +66,8 @@ input[type=submit]{
 
 .btn:hover,
 .btn:active,
-input[type=submit]:hover{
+input[type=submit]:hover,
+input[type=submit]:active{
     background-color: #cf6d17;
     cursor: pointer;/*I added this because was could not make appear hand in send it button*/
 }
@@ -74,7 +79,8 @@ input[type=submit]:hover{
 
 .btn-ghost:hover,
 .btn-ghost:active,
-input[type=submit]:hover{
+input:hover[type=submit]
+{
     border: 1px solid #cf6d17;
     color: #fff
 }
@@ -95,17 +101,29 @@ input[type=submit]:hover{
 }
 
 section {
-    padding: 80px 0
+    padding: 0 0;
+    background-color: #fff;
+    height: 100vh;
+    margin: 0 auto;
 }
 
+/*-------------HEADINGS--------------- */
+h1, h2,h3 {
+    font-weight: 300;
+    text-transform: uppercase;   
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 240%; /*in responsive website all is relative so 240% is with respect to font size of html font size that is 20px*/       
+    word-spacing: 4px;
+    letter-spacing: 1px;
+}
 /*-------------------------------------------------------*/
 /*FORM*/
 /*-------------------------------------------------------*/
-
-.section-form {
-    width: 80%;
-    margin: 0 auto;
-}
 
 input[type=text],
 input[type=email],
@@ -115,6 +133,7 @@ textarea {
     padding: 7px;
     border-radius: 3px;
     border: 1px solid #ccc;
+    font-weight: 300
 }
 
 textarea {
@@ -129,25 +148,131 @@ input[type=checkbox] {
     outline: none; /*to avoid the fous when picking an input, or textarea*/
 }
 
+
 /*leftbar*/
 .leftside{
-    background-color: #e67e22;
-    display:block;
-    height: 100vh;
+    /*span*/
     width: 20%;
-    float: left; /*very important in ordet to the next element also go on one edge with it*/
-    position: fixed
+    background-color: #e67e22;    
+    height: 100vh;
+    /*position: relative;*/
+    /*col*/
+    float: left; /*very important in ordet to the next element also go on one edge with it*/    
+    display: block
 }
 
-.chat{
-    width: 60%;    
-    margin: 10px 10px 0 25% /*up right bottom left*/
+.chat{    
+    /*span*/
+    width: 80%;             
+    /*col*/
+    float: left;
+    display: block;
+    height: 100vh
 }
-/*
-.box:last-child{
-    position: relative;
-    left: 0%;
-    padding-left: 3%;
-    margin-top: 70px;
+
+.messages {
+    margin: 1vh 0 0 2%; /*up right bottom left; by default all have this*/
+    height: 85vh;
+    font-weight: 900;
+    overflow-y: scroll;    
 }
-*/
+
+.send-message {
+    margin-bottom: 1vh;
+    margin: auto auto 0 0%;
+    height: 14vh;
+}
+
+.send-message-form{
+    width: 99%;
+    margin-left: 1%;
+}
+.send-message-form--:first-child{
+    float: left;
+    width: 80%;   
+    margin-right: 2%;
+    margin-left: 2%;
+    margin-bottom: 0%;
+}
+
+.send-message-form--:last-child{
+    width: 16%;    
+    margin-bottom: 0;    
+    float: left;
+}
+
+.send-message-location{
+    margin-left: 0%;
+    margin-right: 10%;
+    /*width: 90%; => distorts the button*/
+    float: left;
+}
+ /*----------------------------background mean page----------------------------------*/
+ .centered-form {
+     width: 100vw;
+     height: 100vh;
+     background-image: linear-gradient(rgba(0, 0, 0, 0.7),rgba(0, 0, 0, 0.7)), url(/img/main-page-image.jpg);
+     /* background-size: cover;
+     background-position: center; */
+     display: flex;
+     justify-content: center;/*flex-start;/*flex-end;/* /*moves child items to the center in the  HORIZONTAL AXIS*/
+     align-items: center /*moves child items to the center in the  HORIZONTAL AXIS*/
+ }
+
+ .centered-form img{
+    transform: scale(0.5); /*the image size is multiplied as much as it is indicated into scale*/
+ }
+
+ .centered-form__box {
+     width: 15%;
+     height: 60%;     
+ }
+ 
+ .centered-form__box label{
+     color: #fff;
+ }
+
+ .centered-form__box input[type="text"]{
+    letter-spacing: 0.1px;
+ }
+
+ .centered-form__box h1 { /*20%*/
+    text-align: center;
+    margin-top: 5%;
+    height: 15%;
+ }
+
+ .centered-form__box form{/*80%*/
+    margin-top: 5%;
+    height: 75%;
+    margin-left: 5%;
+    width: 90%;    
+ }
+
+
+ .centered-form__box__form input[type="text"]{
+     /*margins with respect to ITS PARENT the FORM*/
+     margin-top: 5%;
+     margin-bottom: 10%;
+ }
+
+    .wrapper{ /*wrapper is a child of for so percentajes here must
+        be chosen carefully because of not controllling well the  input and label height elements*/
+        margin-top: 10%; /* % OF THE height of its parent  form*/
+        text-align: center /*to center element inside this component*/
+    }
+
+    .wrapper input[type="submit"] {/*wrapeer input not reccomended because loosing
+        with respect to what  take percentaje*/
+        width: 90%; /*remember we are inheriting box-sizing: border-box*/
+        padding: 6% 0%;/*top bottom left right*/
+        
+        background-color: #e67e22;
+        border: 1px solid #e67e22;
+        color: #fff;
+        margin-right: 15px
+    }
+
+    .wrapper input[type="submit"]:hover{        
+        background-color: #cf6d17
+    }

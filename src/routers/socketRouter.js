@@ -10,8 +10,11 @@ router.get('',(req,res)=>{
     //index refers ti index.hbs
 })
 
-router.get('/users',(req,res)=>{
-    res.send('something')
+router.get('/chat',(req,res)=>{
+    res.render('chat',{
+        /**insert variables here */
+    })
+    //res.send('something')
 })
 
 module.exports = router
