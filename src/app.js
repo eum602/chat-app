@@ -1,4 +1,5 @@
 const express = require('express')
+require('./db/mongoose')
 const hbs = require('hbs')
 const path = require('path') //core module
 const http = require('http') //core module
@@ -52,7 +53,7 @@ io.on('connection',socket=>{
 
         //telling other in the room that a new user has joined
         socket.broadcast.to(room).emit('message',generateMessage(`${username} has joined!`))
-    })  
+    })
     
 
     socket.on('sendMessage',(message,callback) => {
@@ -61,7 +62,7 @@ io.on('connection',socket=>{
             return callback('Profanity is not allowed')
         }
         //testing with 345
-        io.to('345').emit('message',generateMessage(message))
+        io.to('moni').emit('message',generateMessage(message))
         callback()
     })
 
