@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "env-cmd ./config/dev.env  nodemon src/index.js",
+    "dev": "env-cmd ./config/dev.env nodemon src/index.js",
     "test": "env-cmd ./config/test.env jest --watch --runInBand"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "author": "Erick Pacheco P.",
   "license": "ISC",
@@ -14,14 +17,13 @@
     "bad-words": "^3.0.0",
     "express": "^4.17.0",
     "hbs": "^4.0.4",
-    "mongodb": "^3.2.6",
-    "mongoose": "^5.5.12",
+    "mongoose": "^5.3.16",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "env-cmd": "^8.0.2",
     "jest": "^23.6.0",
-    "nodemon": "^1.19.0",
+    "nodemon": "^1.19.1",
     "supertest": "^3.4.1"
   }
 }

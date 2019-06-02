@@ -1,7 +1,7 @@
 //const users = []
-const mongoose = require('mongoose')
 
 const User = require('../models/user')
+const Room = require('../models/room')
 
 const addUser = async({ _id,username, room }) => {//room => room_id
     // Clean the data
@@ -19,12 +19,12 @@ const addUser = async({ _id,username, room }) => {//room => room_id
     // const existingUser = users.find((user) => {
     //     return user.room === room && user.username === username
     // })
-    const existingUser = await User.find({username,room})
+    const existingUser = await User.findOne({_id,username,room})
 
     // Validate username
     if (existingUser) {
         return {
-            error: 'Username is in use!'
+            error: 'Username is in use!',
         }
     }
     // Store user
@@ -32,26 +32,33 @@ const addUser = async({ _id,username, room }) => {//room => room_id
     // users.push(user)
     // return { user }    
     const user = {_id,username,room}
-    await new User(user).save()
-    
+    await new User(user).save()    
     return user
 }
 
-const removeUser = (id) => {
-    const index = users.findIndex((user) => user.id === id)
+const removeUser = async (id) => {
+    console.log(id)
+    //const index = users.findIndex((user) => user.id === id)
+    const user = await getUser(id)
+    await user.remove()
+    return user
 
-    if (index !== -1) {
-        return users.splice(index, 1)[0]
-    }
+    // if (index !== -1) {
+    //     return users.splice(index, 1)[0]
+    // }
 }
 
-const getUser = (id) => {
-    return users.find((user) => user.id === id)
+const getUser = async (id) => {
+    //return users.find((user) => user.id === id)
+    const user = await User.findById(id)    
+    return user
 }
 
-const getUsersInRoom = (room) => {
-    room = room.trim().toLowerCase()
-    return users.filter((user) => user.room === room)
+const getUsersInRoom = async (roomName) => {
+    // room = room.trim().toLowerCase()
+    // return users.filter((user) => user.room === room)
+    const room = await Room.findOne({name:roomName}).populate('users') //gets all the information by pulling from the Users schema
+    return room.users
 }
 
 // const _id = new mongoose.Types.ObjectId

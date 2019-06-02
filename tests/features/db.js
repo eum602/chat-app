@@ -3,21 +3,21 @@ const userOneId = new mongoose.Types.ObjectId()
 const userTwoId = new mongoose.Types.ObjectId()
 const userThreeId = new mongoose.Types.ObjectId()
 const roomOneId = new mongoose.Types.ObjectId()
-const roomTwoId = new mongoose.Types.ObjectId()
+const roomOneName = "FirstRoom"
 const User = require('../../src/models/user')
 const Room = require('../../src/models/room')
 require('../../src/db/mongoose') //super important in order to create the test database
 
 const userOne = {
     _id : userOneId,
-    username: 'Arturo',
+    username: 'arturo', 
     room: roomOneId
 }
 
 const userTwo = {
     _id : userTwoId,
-    username: 'Erick',
-    room: roomTwoId
+    username: 'erick',
+    room: roomOneId
 }
 
 const userThree = {
@@ -29,8 +29,8 @@ const userThree = {
 
 const roomOne = {
     _id: new mongoose.Types.ObjectId(),
-    name: "firstRoom",
-    users: [userOneId] //userOneId is identical the same than userOne._id
+    name: roomOneName,
+    users: [userOneId, userTwoId] //userOneId is identical the same than userOne._id
 }
 
 const setupDatabase = async () => {
@@ -43,8 +43,10 @@ const setupDatabase = async () => {
 module.exports = {
     userOne,
     userTwo,
+    userOneId,
     userThree,
     roomOne,
+    roomOneName,
     setupDatabase
 }
 

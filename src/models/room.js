@@ -4,6 +4,7 @@ const roomSchema = new mongoose.Schema({
     name:{
         type: String,
         required:true,
+        unique:true
     },
     users:[{
         type: mongoose.Schema.Types.ObjectId, //object is an object id
@@ -12,6 +13,12 @@ const roomSchema = new mongoose.Schema({
         //collection
     }]
 },{timestamps:true})
+
+// roomSchema.virtual('users',{
+//     ref: 'User',
+//     localField: 'users',
+//     foreignField: '_id'
+// })
 
 const Room = mongoose.model('Room',roomSchema)
 module.exports = Room
