@@ -68,7 +68,7 @@ const renderRoomData = ({room,users}) =>{
 
 }
 
-const forceScrollDown = (id) => {
+const forceScrollDown = id => {
     var objDiv = document.getElementById(id);
     objDiv.scrollTop = objDiv.scrollHeight;
 }
@@ -88,7 +88,7 @@ socket.on('roomData', ({room,users})=>{
     console.log(room)
     console.log(users)
     renderRoomData({room,users})
-    forceScrollDown('users')    
+    forceScrollDown('users')
 })
 
 $messageForm.addEventListener('submit',e=>{
