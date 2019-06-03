@@ -3,3 +3,4 @@ node_modules
 
 #files
 *lock.json
+heroku_deploy.sh
