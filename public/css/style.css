@@ -158,10 +158,44 @@ input[type=checkbox] {
     /*position: relative;*/
     /*col*/
     float: left; /*very important in ordet to the next element also go on one edge with it*/    
-    display: block
+    display: block;
+    color: #fff
 }
 
-.chat{    
+.room-title{
+    font-weight: 600;
+    text-align: center;
+    height: 10%;
+    background-color: #cf6d17;
+    padding: 10%; /*padding top*/    
+}
+
+.list-title{    
+    padding-top: 10%;
+    font-weight: 400;
+    text-align: center;
+    height: 10%;
+}
+
+.users{
+    height: 80%;
+    padding-top: 5%;
+    overflow-y: hidden;
+    line-height: 145%;
+}
+
+.users:hover {    
+    overflow-y: scroll;
+}
+
+.users li {
+    text-align: left;
+    margin-left: 15%;
+    list-style-type: none
+
+}
+
+.chat{
     /*span*/
     width: 80%;             
     /*col*/
@@ -174,16 +208,18 @@ input[type=checkbox] {
     margin: 1vh 0 0 2%; /*up right bottom left; by default all have this*/
     height: 85vh;
     font-weight: 900;
-    overflow-y: scroll;    
+    overflow-y: scroll;
 }
 
 .send-message {
     margin-bottom: 1vh;
     margin: auto auto 0 0%;
     height: 14vh;
+    padding-top: 3%
 }
 
 .send-message-form{
+
     width: 99%;
     margin-left: 1%;
 }

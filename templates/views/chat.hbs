@@ -11,7 +11,9 @@
     <body>
         <section>
             <div class="leftside"> 
-                    <p></p>                
+                <h2 class="room-title" id="room-title"></h2>
+                <h3 class="list-title">Users</h3>
+                <ul class="users" id="users"></ul>
             </div>
             
             <div class="chat">
@@ -21,7 +23,8 @@
                 <div class="send-message">
                     <div class="col span-9-of-11">
                         <form method="post" action="#" id="message-form" class="send-message-form">                                
-                            <input class="send-message-form--" type="text" name="message" id="name" placeholder="Your message" required>
+                            <input class="send-message-form--" type="text" name="message" id="name" placeholder="Your message"
+                            required autocomplete="off">
                             <input class="send-message-form--" type="submit" name="submit" value="Send it!">                                
                         </form>
                     </div>

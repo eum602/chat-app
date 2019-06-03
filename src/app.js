@@ -6,6 +6,7 @@ const http = require('http') //core module
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 const {generateMessage,generateLocationMessage} = require('./utils/messages')
+const {addUser, removeUser, getUsersInRoom ,getUser} = require('./utils/users')
 //routers
 const socketRouter = require('./routers/socketRouter')
 
@@ -39,9 +40,16 @@ app.use(socketRouter)
 io.on('connection',socket=>{
     console.log('new websocket connection')
 
-    socket.on('join',({username,room})=>{
+    //socket.on('join',async({username,room},callback)=>{
+    socket.on('join',async(options,callback)=>{
+        //const {error , user} = await addUser({id:socket.id,username, room})
+        const {error , user} = await addUser({id:socket.id,...options}) //spread operator "..."
+        if(error){
+            return callback(error) //return in order to none of the cod bellow runs
+        }
+
         //joining a new user to a specific room        
-        socket.join(room)
+        socket.join(user.room)
         //Lets recap
         //socket.emit=> send message to a specific client
         //io.emit => sends an event to all clients including the sender.
@@ -49,26 +57,45 @@ io.on('connection',socket=>{
         //io.to.emit => similar to io but in one room
         //socket.broadcast.emit => analogous to soclket.broadcast but in one room
 
-        socket.emit('message',generateMessage('Welcome!')) //emitting event only to the new user
+        socket.emit('message',generateMessage('Admin',`Welcome ${user.username}!`)) //emitting event only to the new user
 
         //telling other in the room that a new user has joined
-        socket.broadcast.to(room).emit('message',generateMessage(`${username} has joined!`))
+        socket.broadcast.to(user.room).emit('message',generateMessage('Admin',`${user.username} has joined!`))
+        const users = await getUsersInRoom(user.room)
+        io.to(user.room).emit('roomData',{//emitting data to a whole room
+            room: user.room,
+            users: users
+        })
+
+        callback() //meaning sending no errors to the clien
     })
     
 
-    socket.on('sendMessage',(message,callback) => {
-        const filter = new Filter()
-        if(filter.isProfane(message)){
-            return callback('Profanity is not allowed')
+    socket.on('sendMessage',async(message,callback) => {
+        try{
+            const filter = new Filter()
+            if(filter.isProfane(message)){
+                return callback('Profanity is not allowed')
+            }
+            
+            const user = await getUser(socket.id) //getting user by its socket.id
+            if(user){
+                io.to(user.room).emit('message',generateMessage(user.username,message))            
+            }
+
+            callback()
+        }catch(e){
+            callback(e)
         }
-        //testing with 345
-        io.to('moni').emit('message',generateMessage(message))
-        callback()
+        
     })
 
-    socket.on('sendLocation',({latitude,longitude},callback)=>{
+    socket.on('sendLocation',async({latitude,longitude},callback)=>{
         try{
-            io.emit('locationMessage',generateLocationMessage(`https://google.com/maps?q=${latitude},${longitude}`))
+            const user = await getUser(socket.id) //getting user by its socket.id
+            if(user){
+                io.to(user.room).emit('locationMessage',generateLocationMessage(user.username,`https://google.com/maps?q=${latitude},${longitude}`))
+            }           
             callback()
         }catch(e){
             callback(e)
@@ -76,11 +103,19 @@ io.on('connection',socket=>{
     })
 
     //events for disconnected sockets
-    socket.on('disconnect', ()=>{
-        io.emit('message', generateMessage('A user has disconnected'))
-    })    
+    socket.on('disconnect', async()=>{
+        const user = await removeUser(socket.id) //each user identified by its id        
+        if(user){
+            const users = await getUsersInRoom(user.room)
+            io.to(user.room).emit('message', generateMessage('Admin',`${user.username} has left`))
+            io.to(user.room).emit('roomData',{
+                room: user.room,
+                users: users
+            })
+        }
+    })
 })
 
 
-
 module.exports = server //using our custom server
+

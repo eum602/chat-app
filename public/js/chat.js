@@ -13,10 +13,10 @@ const $messages = document.querySelector("#messages")
 //Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 //innerHTML gives us access to the html inside the element
-const renderMsg = ({text,createdAt})=>{
+const renderMsg = ({username,text,createdAt})=>{
     const element = document.createElement('div')
     const formated_time = moment(createdAt).format('h:mm a')
-    const msg = document.createTextNode(`${formated_time} - ${text}`)
+    const msg = document.createTextNode(`${formated_time} - ${username}: ${text}`)
     element.appendChild(msg)
     element.className = ''
     const html = element.outerHTML //parsing from html to string   
@@ -28,13 +28,13 @@ const renderMsg = ({text,createdAt})=>{
     //beforeend:before the mesage div ends, inside of it.
 }
 
-const renderUrl = ({url,createdAt})=>{
+const renderUrl = ({username,url,createdAt})=>{
     const container = document.createElement('div')
     container.className='row'
 
     const paragraph = document.createElement('p')
     const formated_time = moment(createdAt).format('h:mm a')
-    paragraph.textContent = `${formated_time} -  ` //adding content
+    paragraph.textContent = `${formated_time} - ${username}: ` //adding content
     
     const anchor = document.createElement('A')
     //const ref = document.createAttribute('href')
@@ -53,24 +53,43 @@ const renderUrl = ({url,createdAt})=>{
     const html = container.outerHTML
     $messages.insertAdjacentHTML('beforeend',html)    
 }
+const renderRoomData = ({room,users}) =>{
+    const title =  document.getElementById('room-title')
+    title.innerHTML = room;
 
-const forceScrollDown = () => {
-    var objDiv = document.getElementById("messages");
+    const userHTML = document.querySelector('#users')
+    userHTML.innerHTML = ""
+    for(const user of users){
+        //console.log(user)
+        const li = document.createElement('li')
+        li.textContent = user.username        
+        userHTML.appendChild(li)
+    }
+
+}
+
+const forceScrollDown = (id) => {
+    var objDiv = document.getElementById(id);
     objDiv.scrollTop = objDiv.scrollHeight;
 }
 
-
-socket.on('message', ({text,createdAt})=>{
+socket.on('message', ({username,text,createdAt})=>{
     console.log(`Server says: ${createdAt} ${text}`)
-    renderMsg({text,createdAt})
-    forceScrollDown()    
+    renderMsg({username,text,createdAt})
+    forceScrollDown('messages')    
 })
 
 socket.on('locationMessage', url=>{    
     renderUrl(url)
-    forceScrollDown()
+    forceScrollDown('messages')
 })
 
+socket.on('roomData', ({room,users})=>{
+    console.log(room)
+    console.log(users)
+    renderRoomData({room,users})
+    forceScrollDown('users')    
+})
 
 $messageForm.addEventListener('submit',e=>{
     e.preventDefault()
@@ -129,4 +148,11 @@ app.getData = (key)=>{
 }
 
 const userRoom = app.getData('userRoom') //getting object to create a new room
-socket.emit('join',userRoom)
+socket.emit('join',userRoom,error=>{
+    if(error){
+        alert(error)
+        location.href = '/'
+    }
+})
+
+
